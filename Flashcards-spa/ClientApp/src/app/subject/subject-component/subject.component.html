@@ -1,0 +1,36 @@
+<div *ngIf="Subject" xmlns="http://www.w3.org/1999/html" [id]="Subject.SubjectId"
+     class="card mb-3 border-0 d-inline-block" style="scroll-margin: 4rem">
+    <div class="card-body p-0">
+        <div class="d-flex flex-wrap-reverse align-items-center card-title column-gap-2">
+            <h2>{{ Subject.Name }}</h2>
+            <ng-container *ngIf="representation == 'Private'">
+                <app-edit-delete-actions (edit)="showEditModal()" (delete)="showDeleteModal()"></app-edit-delete-actions>
+            </ng-container>
+        </div>
+        <h6 *ngIf="Author" class="card-subtitle mb-1 text-body-secondary">
+            Created by {{ Author }}
+        </h6>
+
+        <div class="mb-2 d-flex gap-1">
+            <span class="badge {{ Public ? 'text-bg-danger' : 'text-bg-info' }}">{{Public ? "Public" : "Private"}}</span>
+            <span class="badge text-bg-secondary">{{ Subject.Decks | count : 'deck'}}</span>
+            <span class="badge text-bg-primary" *ngIf="isYourSubject()">Your subject</span>
+        </div>
+        <p class="card-text readable">{{ Subject.Description || 'No description' }}</p>
+        <div class="d-flex gap-2 gap-md-3 flex-wrap">
+            <div *ngFor="let deck of Subject.Decks">
+                <!-- Deck component -->
+                <app-deck [Deck]="deck"></app-deck>
+            </div>
+            <button *ngIf="isYourSubject()" (click)="showCreateDeckModal()"
+                    class="card btn btn-outline-secondary p-0 card-shaped card-sized align-items-center">
+                <div class="card-body">
+                    <h5 class="card-title">Create deck</h5>
+                </div>
+                <i class="bi bi-plus display-1  "></i>
+            </button>
+
+        </div>
+    </div>
+</div>
+

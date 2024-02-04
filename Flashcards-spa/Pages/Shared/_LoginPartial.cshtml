@@ -1,0 +1,56 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Flashcards_spa.Models;
+@using System.Text.RegularExpressions
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    string? returnUrl = null;
+    var query = ViewContext.HttpContext.Request.Query;
+    if (query.ContainsKey("returnUrl"))
+    {
+        returnUrl = query["returnUrl"];
+    }
+
+    // Get current active razor page
+    var activePage = ViewContext.RouteData.Values["Page"] as string ?? "";
+
+    // Static page names
+    const string login = "/Account/Login";
+    const string register = "/Account/Register";
+
+    // Dynamic page names
+    var manage = new Regex(@"/Account/Manage/.*");
+}
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            @* ReSharper disable once Mvc.AreaNotResolved *@
+            <a id="manage" class="nav-link @(manage.IsMatch(activePage) ? "active" : null)" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16" style="margin-bottom: 0.2em">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                </svg>
+                Account (@UserManager.GetUserName(User))
+            </a>
+        </li>
+        <li class="nav-item">
+            @* ReSharper disable once Mvc.AreaNotResolved *@
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">
+                <button type="submit" class="btn btn-outline-secondary">Log out</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            @* ReSharper disable once Mvc.AreaNotResolved *@
+            <a class="nav-link @(activePage == register ? "active" : null)" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@returnUrl">Register</a>
+        </li>
+        <li class="nav-item">
+            @* ReSharper disable once Mvc.AreaNotResolved *@
+            <a class="nav-link @(activePage == login ? "active" : null)" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@returnUrl">Login</a>
+        </li>
+    }
+</ul>

@@ -1,0 +1,34 @@
+<form [formGroup]="cardCreateForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <div class="mb-3">
+            <label for="Front" class="form-label">Front</label>
+            <input type="text" id="Front" formControlName="Front" autocomplete="off"
+                   [ngClass]="cardCreateForm.controls.Front.invalid ? 'is-invalid' : ''"
+                   class="form-control"
+            />
+            <div class="invalid-feedback">
+                <span *ngIf="cardCreateForm.controls.Front.errors?.required">Front is required</span>
+                <span *ngIf="cardCreateForm.controls.Front.errors?.maxlength">Front must be shorter than 120 characters</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="Back" class="form-label">Back</label>
+            <input type="text" id="Back" formControlName="Back" autocomplete="off"
+                   [ngClass]="cardCreateForm.controls.Back.invalid ? 'is-invalid' : ''"
+                   class="form-control"
+            />
+            <div class="invalid-feedback">
+                <span *ngIf="cardCreateForm.controls.Back.errors?.required">Back is required</span>
+                <span *ngIf="cardCreateForm.controls.Back.errors?.maxlength">Back must be shorter than 120 characters</span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                [disabled]="cardCreateForm.invalid">
+            Create
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>
+

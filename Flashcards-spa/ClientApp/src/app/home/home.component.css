@@ -1,0 +1,86 @@
+﻿/*
+Bootstrap 5 Carousel - Extra styling
+*/
+
+.carousel-control-prev:hover {
+    background-color: rgb(0, 0, 0, 0);
+}
+
+.carousel-control-next:hover {
+    background-color: rgb(0, 0, 0, 0);
+}
+
+.carousel-indicators {
+    gap: 2px 4px;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: rgba(0,0,0,1);
+}
+
+.carousel-caption {
+    background-color: rgb(220, 20, 60, 0.9);
+}
+
+.caption-top {
+    top: 0;
+    bottom: auto;
+}
+
+.caption-center {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: initial;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+}
+
+.carousel-image-home {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.carousel-item img {
+    border-radius: 8px;
+}
+
+/*
+    Erlend's extra styling for landing page
+*/
+
+.ee-indicators {
+    bottom: -48px;
+}
+
+.ee-custom-caption-width {
+    width: fit-content;
+    align-self: center;
+}
+
+.ee-responsive-caption-font-size {
+
+}
+
+/* sm */
+@media only screen and (max-width: 576px) {
+    .ee-custom-caption-width {
+        width: 100%;
+    }
+}
+/* md */
+@media only screen and (max-width: 768px){
+    .ee-custom-caption-width {
+        width: 100%;
+    }
+}
+/* lg */
+@media only screen and (max-width: 992px) {}
+/* xl */
+@media only screen and (max-width: 1120px) {}
+/* xxl and up */
+@media only screen and (min-width: 1120px) {}

@@ -1,0 +1,43 @@
+<form [formGroup]="subjectCreateForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <input type="text" id="Name" formControlName="Name" autocomplete="off"
+               [ngClass]="subjectCreateForm.controls.Name.invalid ? 'is-invalid' : ''"
+               class="form-control"
+        />
+        <div class="invalid-feedback">
+            <div *ngIf="subjectCreateForm.controls.Name.errors?.required">Name is required</div>
+            <div *ngIf="subjectCreateForm.controls.Name.errors?.minlength">Name must be at least 3 characters</div>
+            <div *ngIf="subjectCreateForm.controls.Name.errors?.maxlength">Name must be shorter than 50 characters</div>
+            <div *ngIf="subjectCreateForm.controls.Name.errors?.pattern">Only numbers, letters and these special characters: . -</div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="Description" class="form-label">Description</label>
+        <textarea rows="3" type="text" id="Description" formControlName="Description" autocomplete="off"
+                  class="form-control" style="resize: none"
+                  [ngClass]="subjectCreateForm.controls.Description.invalid ? 'is-invalid' : ''"
+        ></textarea>
+        <div class="invalid-feedback">
+            <span *ngIf="subjectCreateForm.controls.Description.errors?.maxlength">Description must be shorter than 150 characters</span>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label for="Visibility" class="form-label">Visibility</label>
+        <select formControlName="Visibility" id="Visibility" class="form-select"
+                aria-label="Select visibility"
+        >
+            <option value="" disabled>Select subject visibility</option>
+            <option value="0">Public</option>
+            <option value="1">Private</option>
+        </select>
+    </div>
+    <div class="d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="subjectCreateForm.invalid">
+            Create
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
+            Cancel
+        </button>
+    </div>
+</form>

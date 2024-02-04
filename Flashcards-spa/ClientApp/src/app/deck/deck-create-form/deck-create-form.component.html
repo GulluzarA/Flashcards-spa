@@ -1,0 +1,34 @@
+<form [formGroup]="deckCreateForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <div class="mb-3">
+            <label for="Name" class="form-label">Name</label>
+            <input type="text" id="Name" formControlName="Name" autocomplete="off"
+                   [ngClass]="deckCreateForm.controls.Name.invalid ? 'is-invalid' : ''"
+                   class="form-control"
+            />
+            <div class="invalid-feedback">
+                <span *ngIf="deckCreateForm.controls.Name.errors?.required">Name is required</span>
+                <span *ngIf="deckCreateForm.controls.Name.errors?.minlength">Name must be at least 3 characters</span>
+                <span *ngIf="deckCreateForm.controls.Name.errors?.maxlength">Name must be shorter than 50 characters</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description</label>
+            <textarea rows="3" type="text" id="Description" formControlName="Description" autocomplete="off"
+                      class="form-control" style="resize: none"
+                      [ngClass]="deckCreateForm.controls.Description.invalid ? 'is-invalid' : ''"
+            ></textarea>
+            <div class="invalid-feedback">
+                <span *ngIf="deckCreateForm.controls.Description.errors?.maxlength">Description must be shorter than 150 characters</span>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end gap-2">
+        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                [disabled]="deckCreateForm.invalid">
+            Create
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>
+

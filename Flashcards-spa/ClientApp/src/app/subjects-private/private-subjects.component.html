@@ -1,0 +1,51 @@
+<div class="mb-3">
+    <!-- Title-->
+    <h1>
+        Your Subjects
+    </h1>
+    <!-- Description -->
+    <p class="readable">
+        On this page you can create and manage your personal subjects. Subjects are used to group decks together. You
+        can create as many subjects as you want.
+    </p>
+    <!-- Create new subject button-->
+    <button (click)="showCreateSubjectModal()" class="btn btn-primary">
+        Create new subject
+    </button>
+    <!-- Filter input-->
+    <app-filter-input
+            placeholder="Subject name"
+            (filterValueChanged)="subjectNameFilter = $event">
+
+    </app-filter-input>
+</div>
+
+<div *ngIf="(subjects$ | async)?.complete === false" class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<div *ngIf="(subjects$ | async)?.error" class="alert alert-danger">
+    There was an error loading subjects. Status: {{(subjects$ | async)?.error?.message}}
+</div>
+
+<div *ngIf="(subjects$ | async)?.data?.length === 0" class="d-inline-block alert alert-info">
+    <p>You don't have any subjects yet</p>
+</div>
+
+<ng-container *ngIf="!subjectNameFilter">
+    <!--Iterate over and display subjects from the Observable subjects$.-->
+    <div *ngFor="let subject of (subjects$ | async)?.data">
+        <hr class="w-100"/>
+        <app-subject [Subject]="subject" representation="Private"></app-subject>
+    </div>
+</ng-container>
+
+<!--Iterate over and display subjects from the Observable subjects$.-->
+<ng-container *ngIf="subjectNameFilter">
+    <div *ngFor="let subject of (filteredSubjects$ | async)">
+        <hr class="w-100"/>
+        <app-subject [Subject]="subject" representation="Private"></app-subject>
+    </div>
+</ng-container>
+
+

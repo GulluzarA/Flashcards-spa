@@ -1,0 +1,46 @@
+﻿<div class="d-flex flex-wrap align-items-center justify-content-center column-gap-3 mb-3 mb-md-5">
+
+    <h1>
+        {{Title}}
+    </h1>
+
+    <button *ngIf="!summaryNavigate" (click)="setFinishPractice()" class="btn btn-outline-danger mt-1 mt-md-0">Finish
+        practice
+    </button>
+</div>
+
+<div>
+    <div *ngIf="!summaryNavigate"
+         class="d-flex flex-column flex-sm-row align-items-center justify-content-center row-gap-3 column-gap-5">
+        <div class="order-first order-sm-2">
+            <app-card [Card]="card" [IsOwner]="IsOwner" [IsFromDetails]="IsFromDetails"></app-card>
+        </div>
+        <button (click)="incorrectCard()" class="btn btn-danger text-nowrap order-sm-first" style="width: 10rem"
+                id="incorrect">
+            <i class="bi bi-arrow-counterclockwise"></i>
+            Practice again
+        </button>
+        <button (click)="correctCard()" class="btn btn-success text-nowrap order-last" style="width: 10rem"
+                id="correct">
+            <i class="bi bi-check-lg"></i>
+            I got it
+        </button>
+    </div>
+
+    <div class="text-center pt-3">
+
+        <div *ngIf="summaryNavigate" class="alert alert-info">
+            You have finished your practice. Summary in {{countdownSummarySec}}.
+        </div>
+
+        <h4 *ngIf="!summaryNavigate && cardsLeft > 1">
+            {{cardsLeft}} Remaining cards
+        </h4>
+
+        <h4 *ngIf="!summaryNavigate && cardsLeft == 1">
+            Last Card in deck
+        </h4>
+    </div>
+</div>
+    
+

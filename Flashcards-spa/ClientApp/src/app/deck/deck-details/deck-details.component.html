@@ -1,0 +1,71 @@
+<div *ngIf="!(deck$ | async)?.complete" class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<div *ngIf="(deck$ | async)?.error" class="alert alert-danger">
+    There was an error loading the deck. Status: {{(deck$ | async)?.error?.message}}
+</div>
+
+<ng-container *ngIf="(deck$ | async)?.data as deck">
+    <ng-container *ngIf="(subject$ | async)?.data as subject">
+        <!-- Back button -->
+        <a class="icon-link link-body-emphasis icon-link-hover mb-4"
+           [routerLink]="['/subjects/' + (isOwner ? 'private' : 'public')]"
+           [fragment]="subject.SubjectId.toString()"
+           style="--bs-icon-link-transform: translate3d(-.25em, 0, 0);">
+            <i class="bi bi-arrow-left mb-2"></i>
+            Return to {{subject.Name}}
+        </a>
+
+        <!-- Title row-->
+        <div class="d-flex flex-wrap-reverse align-items-center card-title column-gap-2">
+            <!-- Name -->
+            <h1>{{ deck.Name }}</h1>
+            <!-- Actions -->
+            <app-edit-delete-actions *ngIf="isOwner" (edit)="showEditDeckModal(deck)"
+                                     (delete)="showDeleteDeckModal(deck.DeckId)"/>
+        </div>
+
+        <!-- Owner -->
+        <h6 class="card-subtitle mb-1 text-body-secondary">
+            Created by {{isOwner ? (userName$ | async) : ' unknown user'}}
+        </h6>
+
+        <!-- Badges -->
+        <div class="mb-2 d-flex gap-1">
+            <span class="badge text-bg-secondary">{{deck.Cards | count : 'Card'}}</span>
+            <span class="badge"
+                  [ngClass]="subject.Visibility === 0 ? 'text-bg-danger' : 'text-bg-info'">
+            {{subject.Visibility == 0 ? "Public" : "Private"}}
+        </span>
+        </div>
+
+        <p class="card-text readable">{{deck.Description}}</p>
+
+        <!-- Start practice session button -->
+        <button *ngIf="deck.Cards && deck.Cards.length !== 0" (click)="navigateToPractice(deck)"
+                class="btn btn-primary mb-5">
+            {{ activeSession ? 'Continue session' : 'Start practice session'}}
+        </button>
+
+        <div>
+            <button *ngIf="isOwner" class="btn btn-outline-primary mb-3" (click)="showCreateCardModal(deck.DeckId)">
+                Create new card
+            </button>
+
+            <div class="container-fluid d-flex justify-content-center justify-content-md-start  flex-wrap ps-0 mb-3 gap-3">
+                <div *ngIf="!deck.Cards || deck.Cards.length === 0" class="alert alert-info">
+                    There are no cards in this deck.
+                </div>
+
+                <!-- Cards -->
+                <div *ngFor="let card of deck.Cards" class="d-flex flex-column align-items-center gap-1">
+                    <app-edit-delete-actions *ngIf="isOwner" (edit)="showEditCardModal(card)"
+                                             (delete)="showDeleteCardModal(card)"/>
+                    <app-card [Card]="card" [IsOwner]="isOwner!" [IsFromDetails]="true"></app-card>
+                </div>
+            </div>
+        </div>
+
+    </ng-container>
+</ng-container>

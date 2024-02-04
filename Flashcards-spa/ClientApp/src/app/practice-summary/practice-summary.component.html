@@ -1,0 +1,40 @@
+﻿<a [routerLink]="['/subjects/decks', deck.DeckId]"
+   class="icon-link link-body-emphasis icon-link-hover mb-4"
+   style="--bs-icon-link-transform: translate3d(-.25em, 0, 0);">
+    <i class="bi bi-arrow-left mb-2"></i>
+    Return to {{deck.Name}}
+</a>
+
+<div class="container-max-sm ">
+    <h1>Your Results</h1>
+    <h5 class="mb-3">Summary - {{deck.Name}}</h5>
+    <div class="mb-4">
+
+        <div *ngIf="amountAnsweredCards === 0 else Answered" class="alert alert-warning rounded-4">You didn't answer any
+            cards
+        </div>
+
+        <ng-template #Answered>
+            <div class="alert alert-warning rounded-4">
+                <h5 class="alert-heading">Nice!</h5>
+                You answered {{amountAnsweredCards}} {{amountAnsweredCards === 1 ? 'card' : 'cards'}}  in total
+            </div>
+            <div class="alert alert-success rounded-4">
+                <h5 class="alert-heading">Well done!</h5>
+                You got it right {{amountCorrectAnswers}} {{amountCorrectAnswers === 1 ? 'time' : 'times'}}
+            </div>
+            <div class="alert alert-danger rounded-4">
+                <h5 class="alert-heading">Oh my!</h5>
+                You made {{amountWrongAnswers}} {{amountWrongAnswers === 1 ? 'mistake' : 'mistakes'}}
+            </div>
+            <div class="alert alert-info rounded-4">
+                <h5 class="alert-heading">Good effort!</h5>
+                You got {{percentageCorrect}}% of the cards correct
+            </div>
+        </ng-template>
+    </div>
+
+    <a (click)="improveScore()" class="btn btn-primary me-3">
+        Improve your score
+    </a>
+</div>
