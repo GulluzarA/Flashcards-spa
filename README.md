@@ -1,6 +1,6 @@
 # ITPE3200 - Flashcards - spa
 
-This projects is our second group project in the course ITPE3200 - Web Application Development at OsloMet.
+This projects is our second group project in the course ITPE3200 - Web Application Development at OsloMet. Documentation for the project can be read [`here`](https://github.com/GulluzarA/Flashcards-spa/tree/main/Documentation).
 
 ## Table of contents
 
